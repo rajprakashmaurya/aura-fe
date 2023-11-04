@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import Swal from "sweetalert2";
 import {
   Box,
   Button,
@@ -11,6 +12,34 @@ import HomeImage from "../asserts/homeImg.png.png";
 import Logo from "../asserts/image 12.png";
 
 function Register() {
+  const [inputData, setInputData] = useState({
+    hospitalName: "",
+    address: "",
+    city: "",
+    state: "",
+    pincode: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setInputData({
+      ...inputData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    console.log("register ");
+    Swal.fire({
+      icon: "success",
+      title: "Your Registration has been Successful",
+      showConfirmButton: true,
+      showCancelButton: true,
+      confirmButtonText: "OK",
+      cancelButtonText: "Cancel",
+    });
+  };
+
   return (
     <Container component="main" maxWidth="xl" sx={{ my: 2 }}>
       <Grid container spacing={3}>
@@ -49,20 +78,57 @@ function Register() {
                     variant="standard"
                     label="Hospital Name"
                     fullWidth
+                    name="hospitalName"
+                    value={inputData.hospitalName}
+                    onChange={handleInputChange}
                   />
-                  <TextField variant="standard" label="Address" fullWidth />
-                  <TextField variant="standard" label="City" fullWidth />
-                  <TextField variant="standard" label="State" fullWidth />
-                  <TextField variant="standard" label="Pincode" fullWidth />
+                  <TextField
+                    variant="standard"
+                    label="Address"
+                    fullWidth
+                    name="address"
+                    value={inputData.address}
+                    onChange={handleInputChange}
+                  />
+                  <TextField
+                    variant="standard"
+                    label="City"
+                    fullWidth
+                    name="city"
+                    value={inputData.city}
+                    onChange={handleInputChange}
+                  />
+                  <TextField
+                    variant="standard"
+                    label="State"
+                    fullWidth
+                    name="state"
+                    value={inputData.state}
+                    onChange={handleInputChange}
+                  />
+                  <TextField
+                    variant="standard"
+                    label="Pincode"
+                    fullWidth
+                    name="pincode"
+                    value={inputData.pincode}
+                    onChange={handleInputChange}
+                  />
                   <TextField
                     variant="standard"
                     label=" Hospital Registration Date"
                     fullWidth
+                    name="hosRegDate"
+                    value={inputData.hosRegDate}
+                    onChange={handleInputChange}
                   />
                   <TextField
                     variant="standard"
                     label="Number Of Ambulance available"
                     fullWidth
+                    name="numAmb"
+                    value={inputData.numAmb}
+                    onChange={handleInputChange}
                   />
                 </Grid>
                 <Grid item lg={6} md={6} xs={12}>
@@ -71,16 +137,25 @@ function Register() {
                     variant="standard"
                     label="Phone Number"
                     fullWidth
+                    name="phone"
+                    value={inputData.phone}
+                    onChange={handleInputChange}
                   />
                   <TextField
                     variant="standard"
                     label="Hospital Registration Number"
                     fullWidth
+                    name="hosResNum"
+                    value={inputData.hosResNum}
+                    onChange={handleInputChange}
                   />
                   <TextField
                     variant="standard"
                     label="Emergency-Ward Number"
                     fullWidth
+                    name="emWa"
+                    value={inputData.address}
+                    onChange={handleInputChange}
                   />
                   <TextField
                     variant="standard"
@@ -107,7 +182,9 @@ function Register() {
                 alignItems={"center"}
                 justifyContent={"center"}
               >
-                <Button variant="contained">Submit</Button>
+                <Button variant="contained" onClick={handleSubmit}>
+                  Submit
+                </Button>
               </Box>
             </form>
             <Typography variant="body2">

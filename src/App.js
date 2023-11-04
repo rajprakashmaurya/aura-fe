@@ -13,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/data" element={<DataTable />} />
         </Routes>
       </BrowserRouter>
     </div>
