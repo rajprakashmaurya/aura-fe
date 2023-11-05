@@ -8,9 +8,23 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 function TableCard() {
+  const [getData, setGetData] = useState([]);
+  const getTableData = async () => {
+    const res = await axios.get("http://localhost:8080/api/v1/user/user");
+    // console.log("res", res.data.users);
+    setGetData(res.data.users);
+    console.log("log", getData);
+  };
+
+  useEffect((e) => {
+    // e.preventDefault();
+    getTableData();
+  }, []);
+
   return (
     <Container>
       <Box>
@@ -32,32 +46,23 @@ function TableCard() {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
-              <TableCell align="left">1</TableCell>
-              <TableCell align="left">10/09/2000</TableCell>
-              <TableCell align="left">Hospital</TableCell>
-              <TableCell align="left">Email@gmail.com</TableCell>
-              <TableCell align="left">Addethgxdjhkhj</TableCell>
-              <TableCell align="left">1234567878</TableCell>
-              <TableCell align="left">kolkata</TableCell>
-              <TableCell align="left">West bengal</TableCell>
-              <TableCell align="left">121212</TableCell>
-              <TableCell align="left">
-                <Chip label="is Active" />
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell align="left">1</TableCell>
-              <TableCell align="left">10/09/2000</TableCell>
-              <TableCell align="left">Hospital</TableCell>
-              <TableCell align="left">Email@gmail.com</TableCell>
-              <TableCell align="left">Addethgxdjhkhj</TableCell>
-              <TableCell align="left">1234567878</TableCell>
-              <TableCell align="left">kolkata</TableCell>
-              <TableCell align="left">West bengal</TableCell>
-              <TableCell align="left">121212</TableCell>
-              <TableCell align="left">is active</TableCell>
-            </TableRow>
+            {getData &&
+              getData.map((data, index) => (
+                <TableRow key={index}>
+                  <TableCell align="left">{index + 1}</TableCell>
+                  <TableCell align="left">{data.hosRegDate}</TableCell>
+                  <TableCell align="left">{data.hospitalName}</TableCell>
+                  <TableCell align="left">{data.email}</TableCell>
+                  <TableCell align="left">{data.address}</TableCell>
+                  <TableCell align="left">{data.phoneNumber}</TableCell>
+                  <TableCell align="left">{data.city}</TableCell>
+                  <TableCell align="left">{data.state}</TableCell>
+                  <TableCell align="left">{data.pincode}</TableCell>
+                  <TableCell align="left">
+                    <Chip label="is Active" />
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </Box>

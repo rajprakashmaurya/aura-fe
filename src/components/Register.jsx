@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
+import Axios from "axios";
 import {
   Box,
   Button,
@@ -10,14 +11,27 @@ import {
 } from "@mui/material";
 import HomeImage from "../asserts/homeImg.png.png";
 import Logo from "../asserts/image 12.png";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
+  const navigate = useNavigate();
+
+  const [getData, setGetData] = useState([]);
   const [inputData, setInputData] = useState({
     hospitalName: "",
+    email: "",
     address: "",
     city: "",
     state: "",
     pincode: "",
+    hosRegDate: "",
+    hosResNum: "",
+    numAmb: "",
+    emgWrdNum: "",
+    phoneNumber: "",
+    certificate: "",
+    password: "",
+    cfPassword: "",
   });
 
   const handleInputChange = (e) => {
@@ -28,16 +42,44 @@ function Register() {
     });
   };
 
-  const handleSubmit = (e) => {
-    console.log("register ");
-    Swal.fire({
-      icon: "success",
-      title: "Your Registration has been Successful",
-      showConfirmButton: true,
-      showCancelButton: true,
-      confirmButtonText: "OK",
-      cancelButtonText: "Cancel",
-    });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(inputData);
+    try {
+      const headers = {
+        "Content-Type": "application/json",
+      };
+      const response = await Axios.post(
+        "http://localhost:8080/api/v1/user/signup",
+        inputData,
+        {
+          headers: headers,
+        }
+      );
+      const data = response.data;
+      console.log("Response Data:", data);
+
+      // Handle the response data here
+      Swal.fire({
+        icon: "success",
+        title: "Your Registration has been Successful",
+        showConfirmButton: true,
+        confirmButtonText: "OK",
+      });
+      // setInputData("");
+      navigate("/login");
+    } catch (error) {
+      console.error("Error:", error);
+
+      // Handle any errors that occurred during the POST request
+      Swal.fire({
+        icon: "error",
+        title: "Registration failed",
+        text: "An error occurred during registration.",
+        showConfirmButton: true,
+        confirmButtonText: "OK",
+      });
+    }
   };
 
   return (
@@ -71,7 +113,7 @@ function Register() {
                 <Typography variant="h5">Sign Up / Login</Typography>
               </Box>
             </Box>
-            <form>
+            <form onSubmit={handleSubmit}>
               <Grid container spacing={5}>
                 <Grid item lg={6} md={6} xs={12} spacing={5}>
                   <TextField
@@ -118,6 +160,7 @@ function Register() {
                     variant="standard"
                     label=" Hospital Registration Date"
                     fullWidth
+                    type="date"
                     name="hosRegDate"
                     value={inputData.hosRegDate}
                     onChange={handleInputChange}
@@ -132,13 +175,20 @@ function Register() {
                   />
                 </Grid>
                 <Grid item lg={6} md={6} xs={12}>
-                  <TextField variant="standard" label="Email ID" fullWidth />
+                  <TextField
+                    variant="standard"
+                    label="Email ID"
+                    fullWidth
+                    name="email"
+                    value={inputData.email}
+                    onChange={handleInputChange}
+                  />
                   <TextField
                     variant="standard"
                     label="Phone Number"
                     fullWidth
-                    name="phone"
-                    value={inputData.phone}
+                    name="phoneNumber"
+                    value={inputData.phoneNumber}
                     onChange={handleInputChange}
                   />
                   <TextField
@@ -153,25 +203,35 @@ function Register() {
                     variant="standard"
                     label="Emergency-Ward Number"
                     fullWidth
-                    name="emWa"
-                    value={inputData.address}
+                    name="emgWrdNum"
+                    value={inputData.emgWrdNum}
                     onChange={handleInputChange}
                   />
                   <TextField
                     variant="standard"
                     label="Registration certificate Upload"
                     fullWidth
+                    type="file"
+                    name="certificate"
+                    value={inputData.certificate}
+                    onChange={handleInputChange}
                   />
-                  <Button variant="contained">Choose</Button>
+                  {/* <Button variant="contained">Choose</Button> */}
                   <TextField
                     variant="standard"
                     label="Create Password"
                     fullWidth
+                    name="password"
+                    value={inputData.password}
+                    onChange={handleInputChange}
                   />
                   <TextField
                     variant="standard"
                     label="Coniform Password"
                     fullWidth
+                    name="cfPassword"
+                    value={inputData.cfPassword}
+                    onChange={handleInputChange}
                   />
                 </Grid>
               </Grid>

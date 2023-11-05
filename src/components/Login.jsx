@@ -7,12 +7,70 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import Swal from "sweetalert2";
+import Axios from "axios";
+import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 
 import HomeImage from "../asserts/homeImg.png.png";
 import Logo from "../asserts/image 12.png";
 
 function Login() {
+  const navigate = useNavigate();
+  const [inputData, setInputData] = useState({
+    hospitalName: "",
+    email: "",
+    password: "",
+    cfPassword: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setInputData({
+      ...inputData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("login");
+    console.log(inputData);
+
+    try {
+      const headers = {
+        "Content-Type": "application/json",
+      };
+      const response = await Axios.post(
+        "http://localhost:8080/api/v1/user/login",
+        inputData,
+        {
+          headers: headers,
+        }
+      );
+      const data = response.data;
+      console.log("data", data);
+      Swal.fire({
+        icon: "success",
+        title: "Login has been Successful",
+        showConfirmButton: true,
+        confirmButtonText: "OK",
+      });
+      navigate("/data");
+    } catch (error) {
+      console.error("Error:", error);
+
+      // Handle any errors that occurred during the POST request
+      Swal.fire({
+        icon: "error",
+        title: "Login  failed",
+        text: "An error occurred during login.",
+        showConfirmButton: true,
+        confirmButtonText: "OK",
+      });
+    }
+  };
+
   return (
     <Container component="main" maxWidth="xl" sx={{ my: 2 }}>
       <Grid container spacing={3}>
@@ -44,7 +102,7 @@ function Login() {
                 <Typography variant="h5">Sign Up / Login</Typography>
               </Box>
             </Box>
-            <form>
+            <form onSubmit={handleSubmit}>
               <Card>
                 <Box
                   p={2}
@@ -64,13 +122,33 @@ function Login() {
                     variant="standard"
                     label="Hospital Name"
                     fullWidth
+                    name="hospitalName"
+                    value={inputData.hospitalName}
+                    onChange={handleInputChange}
                   />
-                  <TextField variant="standard" label="Email Id" fullWidth />
-                  <TextField variant="standard" label="Password" fullWidth />
+                  <TextField
+                    variant="standard"
+                    label="Email Id"
+                    fullWidth
+                    name="email"
+                    value={inputData.email}
+                    onChange={handleInputChange}
+                  />
+                  <TextField
+                    variant="standard"
+                    label="Password"
+                    fullWidth
+                    name="password"
+                    value={inputData.password}
+                    onChange={handleInputChange}
+                  />
                   <TextField
                     variant="standard"
                     label="Special Access Code"
                     fullWidth
+                    name="cfPassword"
+                    value={inputData.cfPassword}
+                    onChange={handleInputChange}
                   />
                 </Box>
               </Card>
@@ -81,7 +159,11 @@ function Login() {
                 alignItems={"center"}
                 justifyContent={"center"}
               >
-                <Button variant="contained" color="success">
+                <Button
+                  onClick={handleSubmit}
+                  variant="contained"
+                  color="success"
+                >
                   Login
                 </Button>
               </Box>
