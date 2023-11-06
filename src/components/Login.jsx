@@ -39,40 +39,6 @@ function Login() {
     console.log("login");
     console.log(inputData);
 
-    // try {
-    //   const headers = {
-    //     "Content-Type": "application/json",
-    //   };
-    //   const response = await Axios.post(
-    //     "http://localhost:8080/api/v1/user/login",
-    //     inputData,
-    //     {
-    //       headers: headers,
-    //     }
-    //   );
-    //   const data = response.data;
-    //   // setAuth(data.user);
-    //   console.log("data", data.user.hospitalName);
-    //   Swal.fire({
-    //     icon: "success",
-    //     title: "Login has been Successful",
-    //     showConfirmButton: true,
-    //     confirmButtonText: "OK",
-    //   });
-    //   navigate("/takePhoto");
-    // } catch (error) {
-    //   console.error("Error:", error);
-
-    //   // Handle any errors that occurred during the POST request
-    //   Swal.fire({
-    //     icon: "error",
-    //     title: "Login  failed",
-    //     text: "An error occurred during login.",
-    //     showConfirmButton: true,
-    //     confirmButtonText: "OK",
-    //   });
-    // }
-
     try {
       const res = await Axios.post(
         "http://localhost:8080/api/v1/user/login",
