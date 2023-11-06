@@ -135,6 +135,7 @@ function Login() {
                     variant="standard"
                     label="Hospital Name"
                     fullWidth
+                    required
                     name="hospitalName"
                     value={inputData.hospitalName}
                     onChange={handleInputChange}
@@ -143,6 +144,7 @@ function Login() {
                     variant="standard"
                     label="Email Id"
                     fullWidth
+                    required
                     name="email"
                     value={inputData.email}
                     onChange={handleInputChange}
@@ -151,6 +153,8 @@ function Login() {
                     variant="standard"
                     label="Password"
                     fullWidth
+                    required
+                    type="password"
                     name="password"
                     value={inputData.password}
                     onChange={handleInputChange}
@@ -159,6 +163,8 @@ function Login() {
                     variant="standard"
                     label="Special Access Code"
                     fullWidth
+                    required
+                    type="password"
                     name="cfPassword"
                     value={inputData.cfPassword}
                     onChange={handleInputChange}

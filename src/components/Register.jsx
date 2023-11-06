@@ -168,7 +168,8 @@ function Register() {
                   />
                   <TextField
                     variant="standard"
-                    label=" Hospital Registration Date"
+                    placeholder="hhhvkhbkjbkjbkj"
+                    // label=" Hospital Registration Date"
                     fullWidth
                     required
                     type="date"
@@ -180,7 +181,6 @@ function Register() {
                     variant="standard"
                     label="Number Of Ambulance available"
                     fullWidth
-                    required
                     name="numAmb"
                     value={inputData.numAmb}
                     onChange={handleInputChange}
@@ -192,6 +192,7 @@ function Register() {
                     label="Email ID"
                     fullWidth
                     required
+                    type="email"
                     name="email"
                     value={inputData.email}
                     onChange={handleInputChange}
@@ -209,7 +210,6 @@ function Register() {
                     variant="standard"
                     label="Hospital Registration Number"
                     fullWidth
-                    required
                     name="hosResNum"
                     value={inputData.hosResNum}
                     onChange={handleInputChange}
@@ -218,14 +218,13 @@ function Register() {
                     variant="standard"
                     label="Emergency-Ward Number"
                     fullWidth
-                    required
                     name="emgWrdNum"
                     value={inputData.emgWrdNum}
                     onChange={handleInputChange}
                   />
                   <TextField
                     variant="standard"
-                    label="Registration certificate Upload"
+                    // label="Registration certificate Upload"
                     fullWidth
                     type="file"
                     name="certificate"
@@ -238,6 +237,7 @@ function Register() {
                     label="Create Password"
                     fullWidth
                     required
+                    type="password"
                     name="password"
                     value={inputData.password}
                     onChange={handleInputChange}
@@ -247,6 +247,7 @@ function Register() {
                     label="Coniform Password"
                     fullWidth
                     required
+                    type="password"
                     name="cfPassword"
                     value={inputData.cfPassword}
                     onChange={handleInputChange}
