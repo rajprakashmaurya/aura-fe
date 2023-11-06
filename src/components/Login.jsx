@@ -14,8 +14,10 @@ import React, { useState } from "react";
 
 import HomeImage from "../asserts/homeImg.png.png";
 import Logo from "../asserts/image 12.png";
+import { useAuth } from "../context/authContext";
 
 function Login() {
+  const [auth, setAuth] = useAuth();
   const navigate = useNavigate();
   const [inputData, setInputData] = useState({
     hospitalName: "",
@@ -37,30 +39,72 @@ function Login() {
     console.log("login");
     console.log(inputData);
 
-    try {
-      const headers = {
-        "Content-Type": "application/json",
-      };
-      const response = await Axios.post(
-        "http://localhost:8080/api/v1/user/login",
-        inputData,
-        {
-          headers: headers,
-        }
-      );
-      const data = response.data;
-      console.log("data", data);
-      Swal.fire({
-        icon: "success",
-        title: "Login has been Successful",
-        showConfirmButton: true,
-        confirmButtonText: "OK",
-      });
-      navigate("/takePhoto");
-    } catch (error) {
-      console.error("Error:", error);
+    // try {
+    //   const headers = {
+    //     "Content-Type": "application/json",
+    //   };
+    //   const response = await Axios.post(
+    //     "http://localhost:8080/api/v1/user/login",
+    //     inputData,
+    //     {
+    //       headers: headers,
+    //     }
+    //   );
+    //   const data = response.data;
+    //   // setAuth(data.user);
+    //   console.log("data", data.user.hospitalName);
+    //   Swal.fire({
+    //     icon: "success",
+    //     title: "Login has been Successful",
+    //     showConfirmButton: true,
+    //     confirmButtonText: "OK",
+    //   });
+    //   navigate("/takePhoto");
+    // } catch (error) {
+    //   console.error("Error:", error);
 
-      // Handle any errors that occurred during the POST request
+    //   // Handle any errors that occurred during the POST request
+    //   Swal.fire({
+    //     icon: "error",
+    //     title: "Login  failed",
+    //     text: "An error occurred during login.",
+    //     showConfirmButton: true,
+    //     confirmButtonText: "OK",
+    //   });
+    // }
+
+    try {
+      const res = await Axios.post(
+        "http://localhost:8080/api/v1/user/login",
+        inputData
+      );
+      if (res && res.data.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Login has been Successful",
+          showConfirmButton: true,
+          confirmButtonText: "OK",
+        });
+        console.log("log", res.data.user);
+        setAuth({
+          ...auth,
+          user: res.data.user.hospitalName,
+          token: res.data.token,
+        });
+        localStorage.setItem("auth", JSON.stringify(res.data));
+        // navigate(location.state || "/");
+        navigate("/takePhoto");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Login  failed",
+          text: "An error occurred during login.",
+          showConfirmButton: true,
+          confirmButtonText: "OK",
+        });
+      }
+    } catch (error) {
+      console.log(error);
       Swal.fire({
         icon: "error",
         title: "Login  failed",

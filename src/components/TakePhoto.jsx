@@ -4,8 +4,10 @@ import HomeImage from "../asserts/homeImg.png.png";
 import Camera from "../asserts/mdi_camera.png";
 import { useNavigate } from "react-router-dom";
 import Webcam from "react-webcam";
+import { useAuth } from "../context/authContext";
 
 function TakePhoto() {
+  const [auth, setAuth] = useAuth();
   const webcamRef = useRef(null);
   const [capturedImage, setCapturedImage] = useState(null);
   const [isCameraActive, setIsCameraActive] = useState(true);

@@ -12,8 +12,10 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import TableCard from "./TableCard";
 import Navbar from "./Navbar";
 import axios from "axios";
+import { useAuth } from "../context/authContext";
 
 function DataTable() {
+  const [auth, setAuth] = useAuth();
   //GET DATA
   const [getData, setGetData] = useState([]);
 

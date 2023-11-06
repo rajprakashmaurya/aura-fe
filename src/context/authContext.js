@@ -1,24 +1,36 @@
-// create a context (ware house)
+import { useState, useEffect, useContext, createContext } from "react";
+import axios from "axios";
 
-import { createContext, useContext } from "react";
+const AuthContext = createContext();
+const AuthProvider = ({ children }) => {
+  const [auth, setAuth] = useState({
+    user: null,
+    token: "",
+  });
 
-// provider\
+  //default axios
+  axios.defaults.headers.common["Authorization"] = auth?.token;
 
-// Consumer  - useContext hook
-
-const AppContext = createContext();
-
-const AppProvider = ({ children }) => {
+  useEffect(() => {
+    const data = localStorage.getItem("auth");
+    if (data) {
+      const parseData = JSON.parse(data);
+      setAuth({
+        ...auth,
+        user: parseData.user,
+        token: parseData.token,
+      });
+    }
+    //eslint-disable-next-line
+  }, []);
   return (
-    <AppContext.Provider value={"Auth provider"}>
+    <AuthContext.Provider value={[auth, setAuth]}>
       {children}
-    </AppContext.Provider>
+    </AuthContext.Provider>
   );
 };
 
-//custom hook
-const useGlobalContext = () => {
-  return useContext(AppContext);
-};
+// custom hook
+const useAuth = () => useContext(AuthContext);
 
-export { AppContext, AppProvider, useGlobalContext };
+export { useAuth, AuthProvider };
