@@ -17,9 +17,10 @@ const AuthProvider = ({ children }) => {
       const parseData = JSON.parse(data);
       setAuth({
         ...auth,
-        user: parseData.user,
-        token: parseData.token,
+        user: parseData.user.hospitalName,
+        token: auth.token,
       });
+      console.log("data1", parseData.token);
     }
     //eslint-disable-next-line
   }, []);

@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 function Navbar() {
   const [auth, setAuth] = useAuth();
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  // const [isLoggedIn, setIsLoggedIn] = useState(true);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -18,8 +18,9 @@ function Navbar() {
       user: null,
       token: "",
     });
-    setIsLoggedIn(true);
+
     localStorage.removeItem("auth");
+    navigate("/");
     Swal.fire({
       icon: "success",
       title: "User Logout successful",
@@ -53,8 +54,8 @@ function Navbar() {
           </Box>
           <Box display={"flex"} alignItems={"center"} gap={4}>
             <img src={Avator} alt="" />
-            {isLoggedIn ? (
-              <Typography>{auth?.user?.hospitalName}</Typography>
+            {auth?.user ? (
+              <Typography>{auth?.user}</Typography>
             ) : (
               <Typography>Not user</Typography>
             )}
