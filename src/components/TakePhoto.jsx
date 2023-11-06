@@ -1,5 +1,5 @@
 import { Box, Button, Card, Container, Grid, Typography } from "@mui/material";
-import React, { useContext } from "react";
+import React from "react";
 import HomeImage from "../asserts/homeImg.png.png";
 import Logo from "../asserts/image 12.png";
 import Camera from "../asserts/mdi_camera.png";

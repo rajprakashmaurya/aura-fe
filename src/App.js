@@ -5,10 +5,12 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import TakePhoto from "./components/TakePhoto";
 import PageNotFound from "./components/PageNotFound";
+import CameraComponent from "./components/CameraApp";
 
 function App() {
   return (
     <div className="App">
+      <CameraComponent />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Register />} />
