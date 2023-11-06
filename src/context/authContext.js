@@ -20,7 +20,7 @@ const AuthProvider = ({ children }) => {
         user: parseData.user.hospitalName,
         token: auth.token,
       });
-      console.log("data1", parseData.token);
+      // console.log("data1", parseData.token);
     }
     //eslint-disable-next-line
   }, []);
