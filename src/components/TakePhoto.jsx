@@ -1,26 +1,52 @@
 import { Box, Button, Card, Container, Grid, Typography } from "@mui/material";
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import HomeImage from "../asserts/homeImg.png.png";
-import Logo from "../asserts/image 12.png";
 import Camera from "../asserts/mdi_camera.png";
 import { useNavigate } from "react-router-dom";
+import Webcam from "react-webcam";
 
 function TakePhoto() {
+  const webcamRef = useRef(null);
+  const [capturedImage, setCapturedImage] = useState(null);
+  const [isCameraActive, setIsCameraActive] = useState(true);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    startCamera();
+  }, []);
+
+  const startCamera = () => {
+    setIsCameraActive(true);
+    setIsSubmitted(false);
+  };
+
+  const capture = () => {
+    const imageSrc = webcamRef.current.getScreenshot();
+    setCapturedImage(imageSrc);
+    setIsCameraActive(false);
+    setIsSubmitted(true);
+  };
+
   const handleCapture = () => {
-    //
-    navigate("/data");
+    if (isCameraActive) {
+      capture();
+    } else {
+      startCamera();
+    }
+  };
+
+  const handleSubmission = () => {
+    // Handle your submission logic here
+    navigate("/data"); // Navigate to the next component
   };
 
   return (
     <Container component="main" maxWidth="xl" sx={{ my: 2 }}>
       <Grid container spacing={3}>
-        {/* Image */}
         <Grid item lg={4} md={5} xs={12}>
           <img src={HomeImage} alt="" width="100%" />
         </Grid>
-        {/* Form */}
         <Grid item lg={8} md={7} xs={12}>
           <Box
             display="flex"
@@ -36,20 +62,15 @@ function TakePhoto() {
               alignItems={"center"}
               justifyContent={"center"}
             >
-              <Box marginLeft={-40}>
-                <img src={Logo} alt="" />
-              </Box>
-
               <Box marginLeft={10}>
                 <Typography variant="h5">
-                  {" "}
-                  <span style={{ color: "gray" }}>Sign Up </span>/ Login
+                  <span style={{ color: "gray" }}>Sign Up</span> / Login
                 </Typography>
               </Box>
             </Box>
             <form>
               <Typography variant="body1">
-                Please Capture our face to continue
+                Please capture your face to continue
               </Typography>
               <Card>
                 <Box
@@ -65,7 +86,19 @@ function TakePhoto() {
                     backgroundColor: "#C0C0C0",
                   }}
                 >
-                  <img src={Camera} alt="" />
+                  {isCameraActive ? (
+                    <Webcam
+                      audio={false}
+                      ref={webcamRef}
+                      screenshotFormat="image/jpeg"
+                    />
+                  ) : (
+                    <img
+                      src={isCameraActive ? Camera : capturedImage}
+                      alt=""
+                      width="100%"
+                    />
+                  )}
                 </Box>
               </Card>
 
@@ -77,10 +110,10 @@ function TakePhoto() {
               >
                 <Button
                   variant="contained"
-                  color="success"
-                  onClick={handleCapture}
+                  color={isCameraActive ? "primary" : "success"}
+                  onClick={isSubmitted ? handleSubmission : handleCapture}
                 >
-                  Capture
+                  {isCameraActive ? "Capture" : "Submit"}
                 </Button>
               </Box>
             </form>
