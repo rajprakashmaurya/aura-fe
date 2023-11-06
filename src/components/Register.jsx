@@ -11,12 +11,12 @@ import {
 } from "@mui/material";
 import HomeImage from "../asserts/homeImg.png.png";
 import Logo from "../asserts/image 12.png";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Register() {
   const navigate = useNavigate();
 
-  const [getData, setGetData] = useState([]);
+  // const [getData, setGetData] = useState([]);
   const [inputData, setInputData] = useState({
     hospitalName: "",
     email: "",
@@ -56,6 +56,7 @@ function Register() {
           headers: headers,
         }
       );
+
       const data = response.data;
       console.log("Response Data:", data);
 
@@ -110,7 +111,11 @@ function Register() {
               </Box>
 
               <Box marginLeft={10}>
-                <Typography variant="h5">Sign Up / Login</Typography>
+                <Typography variant="h5">
+                  {" "}
+                  <span>Sign Up </span>/{" "}
+                  <span style={{ color: "gray" }}>Login</span>{" "}
+                </Typography>
               </Box>
             </Box>
             <form onSubmit={handleSubmit}>
@@ -121,6 +126,7 @@ function Register() {
                     label="Hospital Name"
                     fullWidth
                     name="hospitalName"
+                    required
                     value={inputData.hospitalName}
                     onChange={handleInputChange}
                   />
@@ -128,6 +134,7 @@ function Register() {
                     variant="standard"
                     label="Address"
                     fullWidth
+                    required
                     name="address"
                     value={inputData.address}
                     onChange={handleInputChange}
@@ -136,6 +143,7 @@ function Register() {
                     variant="standard"
                     label="City"
                     fullWidth
+                    required
                     name="city"
                     value={inputData.city}
                     onChange={handleInputChange}
@@ -144,6 +152,7 @@ function Register() {
                     variant="standard"
                     label="State"
                     fullWidth
+                    required
                     name="state"
                     value={inputData.state}
                     onChange={handleInputChange}
@@ -152,6 +161,7 @@ function Register() {
                     variant="standard"
                     label="Pincode"
                     fullWidth
+                    required
                     name="pincode"
                     value={inputData.pincode}
                     onChange={handleInputChange}
@@ -160,6 +170,7 @@ function Register() {
                     variant="standard"
                     label=" Hospital Registration Date"
                     fullWidth
+                    required
                     type="date"
                     name="hosRegDate"
                     value={inputData.hosRegDate}
@@ -169,6 +180,7 @@ function Register() {
                     variant="standard"
                     label="Number Of Ambulance available"
                     fullWidth
+                    required
                     name="numAmb"
                     value={inputData.numAmb}
                     onChange={handleInputChange}
@@ -179,6 +191,7 @@ function Register() {
                     variant="standard"
                     label="Email ID"
                     fullWidth
+                    required
                     name="email"
                     value={inputData.email}
                     onChange={handleInputChange}
@@ -187,6 +200,7 @@ function Register() {
                     variant="standard"
                     label="Phone Number"
                     fullWidth
+                    required
                     name="phoneNumber"
                     value={inputData.phoneNumber}
                     onChange={handleInputChange}
@@ -195,6 +209,7 @@ function Register() {
                     variant="standard"
                     label="Hospital Registration Number"
                     fullWidth
+                    required
                     name="hosResNum"
                     value={inputData.hosResNum}
                     onChange={handleInputChange}
@@ -203,6 +218,7 @@ function Register() {
                     variant="standard"
                     label="Emergency-Ward Number"
                     fullWidth
+                    required
                     name="emgWrdNum"
                     value={inputData.emgWrdNum}
                     onChange={handleInputChange}
@@ -221,6 +237,7 @@ function Register() {
                     variant="standard"
                     label="Create Password"
                     fullWidth
+                    required
                     name="password"
                     value={inputData.password}
                     onChange={handleInputChange}
@@ -229,6 +246,7 @@ function Register() {
                     variant="standard"
                     label="Coniform Password"
                     fullWidth
+                    required
                     name="cfPassword"
                     value={inputData.cfPassword}
                     onChange={handleInputChange}
@@ -242,7 +260,7 @@ function Register() {
                 alignItems={"center"}
                 justifyContent={"center"}
               >
-                <Button variant="contained" onClick={handleSubmit}>
+                <Button variant="contained" type="submit">
                   Submit
                 </Button>
               </Box>

@@ -56,7 +56,7 @@ function Login() {
         showConfirmButton: true,
         confirmButtonText: "OK",
       });
-      navigate("/data");
+      navigate("/takePhoto");
     } catch (error) {
       console.error("Error:", error);
 
@@ -99,7 +99,10 @@ function Login() {
               </Box>
 
               <Box marginLeft={10}>
-                <Typography variant="h5">Sign Up / Login</Typography>
+                <Typography variant="h5">
+                  {" "}
+                  <span style={{ color: "gray" }}>Sign Up </span> / Login
+                </Typography>
               </Box>
             </Box>
             <form onSubmit={handleSubmit}>
