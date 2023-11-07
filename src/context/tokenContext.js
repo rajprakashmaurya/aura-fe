@@ -2,7 +2,7 @@ import { createContext } from "react";
 
 const TokenContext = createContext();
 
-const TokenProvider = ({ children }) => {
+const TokenProvider = ({ chieldren }) => {
   return (
     <TokenContext.Provider
       value={{
@@ -10,7 +10,7 @@ const TokenProvider = ({ children }) => {
         lname: "maurya",
       }}
     >
-      {children}
+      {chieldren}
     </TokenContext.Provider>
   );
 };
